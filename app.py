@@ -7,7 +7,11 @@ import os
 
 app = Flask(__name__)
 # Replace with your actual Vercel frontend URL in production!
-CORS(app, supports_credentials=True, origins=["https://f-ken4wso36-ali-fakis-projects.vercel.app"])
+CORS(app, supports_credentials=True, origins=[
+    "https://f-lfyb-hd67eg5hv-ali-fakis-projects.vercel.app",
+    "https://f-lfyb.vercel.app",
+    "https://f-lfyb-ali-fakis-projects.vercel.app"
+])
 app.secret_key = os.environ.get('SECRET_KEY', 'alifaliali24100')
 
 # Connect to PostgreSQL using environment variable
