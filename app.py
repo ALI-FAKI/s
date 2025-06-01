@@ -13,8 +13,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'alifaliali24100')
 # Connect to PostgreSQL using environment variable
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if not DATABASE_URL:
-    # Local fallback for development
-    DATABASE_URL = "postgresql://postgres:1qaz1WSX@localhost:5432/attendance_db"
+    DATABASE_URL = "postgresql://attendance_db_zkog_user:WD983v48G2HvmGTsarzzXkzV9rw1p2tx@dpg-d0tni8m3jp1c73eq2v60-a/attendance_db_zkog"
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
