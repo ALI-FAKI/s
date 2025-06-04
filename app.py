@@ -15,7 +15,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'alifaliali24100')
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if not DATABASE_URL:
-   DATABASE_URL = "postgresql://postgres:1qaz1WSX%40%23@db.hxacfxidjsphycxywajx.supabase.co:5432/postgres"
+   DATABASE_URL = "postgresql://postgres:[YOUR-PASSWORD]@db.hxacfxidjsphycxywajx.supabase.co:5432/postgres"
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
