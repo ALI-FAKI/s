@@ -5,6 +5,10 @@ import hashlib
 from functools import wraps
 import os
 import secrets
+from itsdangerous import URLSafeTimedSerializer
+from sqlalchemy.exc import IntegrityError
+import smtplib
+from email.mime.text import MIMEText
 
 # For sending emails
 from flask_mail import Mail, Message
@@ -15,7 +19,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'alifaliali24100')
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if not DATABASE_URL:
-   DATABASE_URL = "postgresql://postgres:1qaz1WSX%40%23@db.hxacfxidjsphycxywajx.supabase.co:5432/postgres"
+   DATABASE_URL = "postgresql://postgres.hxacfxidjsphycxywajx:1qaz1WSX%40%23@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
@@ -60,8 +64,8 @@ def home():
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'your_email@gmail.com')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your_app_password')
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'alifakiali24@gmail.com')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'ftfa egqv fiiw llbg')
 mail = Mail(app)
 
 # --- In-memory reset tokens (for demo; use DB for production) ---
@@ -85,7 +89,11 @@ def register():
         cur.execute("UPDATE users SET owner_id=%s WHERE id=%s", (user[0], user[0]))
         conn.commit()
         return jsonify({'id': user[0], 'name': user[1], 'role': user[2], 'email': user[3]})
+    except psycopg2.IntegrityError as e:
+        conn.rollback()  # 💥 rollback to fix aborted transaction
+        return jsonify({'error': 'Email already exists'}), 400
     except Exception as e:
+        conn.rollback()  # 💥 important for any other DB error
         return jsonify({'error': str(e)}), 400
 
 @app.route('/api/login', methods=['POST'])
