@@ -14,7 +14,7 @@ from email.mime.text import MIMEText
 from flask_mail import Mail, Message
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+CORS(app, supports_credentials=True, origins=["https://s-8.onrender.com"])
 app.secret_key = os.environ.get('SECRET_KEY', 'alifaliali24100')
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
