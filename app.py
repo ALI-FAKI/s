@@ -14,7 +14,21 @@ from email.mime.text import MIMEText
 from flask_mail import Mail, Message
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://front-rsif.vercel.app"}})
+origins = [
+    "https://front-rsif.vercel.app",  # Your Vercel production domain
+    "http://localhost:3000",         # For local development
+    "http://localhost:5173"
+]
+
+# This is the key change. We are now allowing more methods and headers.
+# We also changed the resource path to r"/*" to cover ALL routes, including /login.
+CORS(
+    app,
+    resources={r"/*": {"origins": origins}}, # Apply CORS to all routes
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"], # Allow these methods
+    allow_headers=["Content-Type", "Authorization"], # Allow these headers
+    supports_credentials=True
+)
 app.secret_key = os.environ.get('SECRET_KEY', 'alifaliali24100')
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
