@@ -27,12 +27,13 @@ if not app.secret_key:
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'alifakiali24@gmail.com'
-app.config['MAIL_PASSWORD'] = 'ozyzxpcntlvxalgf'  # not your Gmail password
-app.config['MAIL_DEFAULT_SENDER'] = 'alifakiali24@gmail.com'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = True  # True for production HTTPS
+mail = Mail(app)
 
 reset_tokens = {}
-mail = Mail(app)
 
 
 def get_db_connection():
