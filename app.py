@@ -15,7 +15,7 @@ app = Flask(__name__)
 CORS(app,
      supports_credentials=True,
      origins=[
-         "https://front-rsif.vercel.app",
+         "https://data-wg78.onrender.com",
          "http://localhost:3000",
          "http://localhost:5173"
      ])
